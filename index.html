@@ -177,7 +177,9 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
   <script>
   let count = localStorage.getItem("fakeViews");
   if (!count) {
-    count = 110;
+    let count = Math.floor(Math.random() * 21) + 80; // 0–20 + 80 → 80–100
+    localStorage.setItem("fakeViews", count);
+    localStorage.setItem("fakeViewsCounted", "true");
   }
   count++;
   localStorage.setItem("fakeViews", count);
