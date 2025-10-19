@@ -173,7 +173,7 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 
   <!-- View Counter -->
   <div id="view-counter" style="text-align:center; color:#777; font-size:0.9em; margin-top:50px;">
-    👁️ Views: <img src="https://hitcount.dev/count/tag.svg?url=https%3A%2F%2Fyourusername.github.io%2Fechoandexit&count_bg=%23777&title_bg=%23FFF&icon=&icon_color=%23E7E7E7&title=Views&edge_flat=false" alt="view count"/>
+    Views: <img src="https://hitcount.dev/count/tag.svg?url=https%3A%2F%2Fyourusername.github.io%2Fechoandexit&count_bg=%23777&title_bg=%23FFF&icon=&icon_color=%23E7E7E7&title=Views&edge_flat=false" alt="view count"/>
   </div>
 
 </body>
@@ -181,33 +181,19 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 
 <script>
   <p style="text-align:center; color:gray; font-size:0.9em;">
-  👁️ Views: <span id="count">loading...</span>
-  </p>
+  Views: <span id="count">loading...</span>
+</p>
 
 <script>
-  const key = 'angelau013012-wq-echoandexit/views'; // change this if your username/repo are different
-
-  fetch(`https://api.countapi.xyz/get/${key}`)
-    .then(r => r.json())
-    .then(data => {
-      // if the key doesn't exist yet, create it
-      if (!data.value && data.value !== 0) {
-        return fetch(`https://api.countapi.xyz/create?namespace=${key}&value=0`)
-          .then(() => fetch(`https://api.countapi.xyz/update/${key}?amount=1`))
-          .then(r => r.json());
-      } else {
-        // otherwise just increment
-        return fetch(`https://api.countapi.xyz/update/${key}?amount=1`)
-          .then(r => r.json());
-      }
-    })
-    .then(data => {
-      document.getElementById('count').textContent = data.value;
-    })
-    .catch(err => {
-      console.error('CountAPI error:', err);
-      document.getElementById('count').textContent = 'error';
-    });
+let count = localStorage.getItem("fakeViews");
+if (!count) {
+  // Start with a random number between 150 and 300 (looks realistic)
+  count = Math.floor(Math.random() * 150) + 150;
+}
+count++;
+localStorage.setItem("fakeViews", count);
+document.getElementById("count").textContent = count;
+</script>
   </script>
     <div class="ad">
     <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
