@@ -175,14 +175,13 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
   </p>
   
   <script>
-  let count = localStorage.getItem("fakeViews");
+  let count = localStorage.getItem("fakeViewsV2");
   if (!count) {
     let count = Math.floor(Math.random() * 21) + 80; // 0–20 + 80 → 80–100
-    localStorage.setItem("fakeViews", count);
-    localStorage.setItem("fakeViewsCounted", "true");
+    localStorage.setItem("fakeViewsV2", count);
   }
   count++;
-  localStorage.setItem("fakeViews", count);
+  localStorage.setItem("fakeViewsV2", count);
   document.getElementById("count").textContent = count;
   </script>
       <div class="ad">
