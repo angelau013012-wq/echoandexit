@@ -179,24 +179,22 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 </body>
 </html>
 
-<script>
- <p style="text-align:center; color:gray; font-size:0.9em;">
-  👁️ Views: <span id="count">loading...</span>
-</p>
-
-<script>
+  <p style="text-align:center; color:gray; font-size:0.9em;">
+    👁️ Views: <span id="count">loading...</span>
+  </p>
+  
+  <script>
   let count = localStorage.getItem("fakeViews");
   if (!count) {
-    // start with random realistic number (between 150–300)
     count = Math.floor(Math.random() * 150) + 150;
   }
   count++;
   localStorage.setItem("fakeViews", count);
   document.getElementById("count").textContent = count;
   </script>
-    <div class="ad">
-    <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
-  </div>
+      <div class="ad">
+      <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
+    </div>
 
   <script>
     const el = document.getElementById('today-date');
