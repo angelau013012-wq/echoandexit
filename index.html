@@ -170,37 +170,46 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 
 </html>
 
-  <p style="text-align:center; color:gray; font-size:0.9em;">
-    Views: <span id="count">loading...</span>
-  </p>
+  <!-- Global View Counter -->
+  <div id="counter">
+    👁️ Views: <span id="count">loading...</span>
+  </div>
   
+  <!-- Counter Script -->
   <script>
-  const counterUrl = 'https://api.counterapi.dev/v2/page-viewcounter/page-viewcounter';
+  document.addEventListener("DOMContentLoaded", () => {
+    const counterUrl = 'https://api.counterapi.dev/v2/page-viewcounter/page-viewcounter';
+    
+    function updateCount(value) {
+      const countSpan = document.getElementById('count');
+      if(countSpan) countSpan.textContent = value;
+    }
   
-  // Increment once per device
-  if (!localStorage.getItem('counted')) {
-    fetch(`${counterUrl}/up`, { method: 'POST' })
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('count').textContent = data.value;
-        localStorage.setItem('counted', 'true'); // mark device counted
-      })
-      .catch(err => {
-        console.error('Error incrementing view count:', err);
-        document.getElementById('count').textContent = 'Error';
-      });
-  } else {
-    // Already counted → just get current value
-    fetch(counterUrl)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('count').textContent = data.value;
-      })
-      .catch(err => {
-        console.error('Error fetching view count:', err);
-        document.getElementById('count').textContent = 'Error';
-      });
-  }
+    // Increment once per device
+    if (!localStorage.getItem('counted')) {
+      fetch(`${counterUrl}/up`, { method: 'POST' })
+        .then(res => res.json())
+        .then(data => {
+          updateCount(data.value);
+          localStorage.setItem('counted', 'true'); // mark this device counted
+        })
+        .catch(err => {
+          console.error('Error incrementing view count:', err);
+          updateCount('Error');
+        });
+    } else {
+      // Already counted → just get current value
+      fetch(counterUrl)
+        .then(res => res.json())
+        .then(data => {
+          updateCount(data.value);
+        })
+        .catch(err => {
+          console.error('Error fetching view count:', err);
+          updateCount('Error');
+        });
+    }
+  });
   </script>
       <div class="ad">
       <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
