@@ -171,45 +171,12 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 </html>
 
   <!-- Global View Counter -->
-  <div id="counter">
-    👁️ Views: <span id="count">loading...</span>
-  </div>
+
+  <!-- 1️⃣ CounterAPI Library -->
+  <script src="https://counterapi.com/c.js" async></script>
   
-  <!-- Counter Script -->
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const counterUrl = 'https://api.counterapi.dev/v2/page-viewcounter/page-viewcounter';
-    
-    function updateCount(value) {
-      const countSpan = document.getElementById('count');
-      if(countSpan) countSpan.textContent = value;
-    }
-  
-    // Increment once per device
-    if (!localStorage.getItem('counted')) {
-      fetch(`${counterUrl}/up`, { method: 'POST' })
-        .then(res => res.json())
-        .then(data => {
-          updateCount(data.value);
-          localStorage.setItem('counted', 'true'); // mark this device counted
-        })
-        .catch(err => {
-          console.error('Error incrementing view count:', err);
-          updateCount('Error');
-        });
-    } else {
-      // Already counted → just get current value
-      fetch(counterUrl)
-        .then(res => res.json())
-        .then(data => {
-          updateCount(data.value);
-        })
-        .catch(err => {
-          console.error('Error fetching view count:', err);
-          updateCount('Error');
-        });
-    }
-  });
+  <!-- 2️⃣ Counter Display -->
+  <div class="counterapi" style="min-height:44px"></div>
   </script>
       <div class="ad">
       <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
