@@ -180,21 +180,36 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 </html>
 
 <script>
- <p style="text-align:center; color:gray; font-size:0.9em;">
+  <p style="text-align:center; color:gray; font-size:0.9em;">
   👁️ Views: <span id="count">loading...</span>
-</p>
+  </p>
 
 <script>
-  fetch('https://api.countapi.xyz/update/angelalau-echoandexit/views/?amount=1')
-    .then(res => res.json())
-    .then(res => {
-      document.getElementById('count').textContent = res.value;
+  const key = 'angelau013012-wq-echoandexit/views'; // change this if your username/repo are different
+
+  fetch(`https://api.countapi.xyz/get/${key}`)
+    .then(r => r.json())
+    .then(data => {
+      // if the key doesn't exist yet, create it
+      if (!data.value && data.value !== 0) {
+        return fetch(`https://api.countapi.xyz/create?namespace=${key}&value=0`)
+          .then(() => fetch(`https://api.countapi.xyz/update/${key}?amount=1`))
+          .then(r => r.json());
+      } else {
+        // otherwise just increment
+        return fetch(`https://api.countapi.xyz/update/${key}?amount=1`)
+          .then(r => r.json());
+      }
     })
-    .catch(() => {
+    .then(data => {
+      document.getElementById('count').textContent = data.value;
+    })
+    .catch(err => {
+      console.error('CountAPI error:', err);
       document.getElementById('count').textContent = 'error';
     });
-</script>
-  <div class="ad">
+  </script>
+    <div class="ad">
     <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
   </div>
 
