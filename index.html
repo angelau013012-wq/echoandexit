@@ -170,46 +170,49 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 
 </html>
 
-  <!-- View Counter -->
   <p style="text-align:center; color:gray; font-size:0.9em;">
-    👁️ Views: <span id="count">loading...</span>
+  👁️ Views: <span id="count">loading...</span>
   </p>
   
-  <!-- CounterAPI Library -->
-  <script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
-  
   <script>
-    // Initialize the CounterAPI client
-    const counter = new Counter({
-      workspace: 'development-team-14', // Your workspace name
-      debug: true,                       // Optional: logs for debugging
-      timeout: 5000                       // Optional: request timeout
+  const apiKey = 'ut_YGD9lFSGQWAd7vsJLVfOGYa2hGg1v3v1xPbbcIhy'; // Replace with your API key
+  const counterUrl = 'https://api.counterapi.dev/v2/page-viewcounter/page-viewcounter';
+  
+  // Only increment once per device
+  if (!localStorage.getItem('counted')) {
+    fetch(`${counterUrl}/up`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('count').textContent = data.value;
+      localStorage.setItem('counted', 'true'); // mark this device as counted
+    })
+    .catch(err => {
+      console.error('Error incrementing counter:', err);
+      document.getElementById('count').textContent = 'Error';
     });
-  
-    const counterName = 'views'; // Your counter name
-  
-    // Display the current global count
-    counter.get(counterName)
-      .then(result => {
-        document.getElementById('count').textContent = result.value;
-      })
-      .catch(error => {
-        console.error('Error fetching view count:', error);
-        document.getElementById('count').textContent = 'Error';
-      });
-  
-    // Increment once per device
-    if (!localStorage.getItem('counted')) {
-      counter.up(counterName)
-        .then(result => {
-          console.log('View count incremented:', result.value);
-          localStorage.setItem('counted', 'true'); // mark this device counted
-          document.getElementById('count').textContent = result.value; // update display
-        })
-        .catch(error => {
-          console.error('Error incrementing view count:', error);
-        });
-    }
+  } else {
+    // If already counted, just get current value
+    fetch(counterUrl, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('count').textContent = data.value;
+    })
+    .catch(err => {
+      console.error('Error fetching counter:', err);
+      document.getElementById('count').textContent = 'Error';
+    });
+  }
   </script>
       <div class="ad">
       <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
