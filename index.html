@@ -180,26 +180,22 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 </html>
 
 <script>
-  // Create your unique counter key (can be anything)
-  const counterKey = "echoandexit_connected_article";
+ <p style="text-align:center; color:gray; font-size:0.9em;">
+  👁️ Views: <span id="count">loading...</span>
+</p>
 
-  fetch(`https://api.countapi.xyz/hit/${counterKey}/visits`)
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('count').innerText = data.value;
+<script>
+  fetch('https://api.countapi.xyz/update/angelalau-echoandexit/views/?amount=1')
+    .then(res => res.json())
+    .then(res => {
+      document.getElementById('count').textContent = res.value;
     })
     .catch(() => {
-      document.getElementById('count').innerText = "Error";
+      document.getElementById('count').textContent = 'error';
     });
 </script>
   <div class="ad">
     <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
-  </div>
-
-  <div class="podcast">
-    <h2>EchoCast Episode 1</h2>
-    <!-- #️⃣ Placeholder for Spotify podcast embed -->
-    <p><em>( Spotify podcast can go here later.)</em></p>
   </div>
 
   <script>
