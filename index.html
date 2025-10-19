@@ -171,21 +171,37 @@ style="width:100%; max-width:800px; border-radius:12px; margin:30px auto; displa
 </html>
 
   <p style="text-align:center; color:gray; font-size:0.9em;">
-  Views: <span id="count">loading...</span>
-</p>
+  👁️ Views: <span id="count">loading...</span>
+  </p>
 
 <script>
-  const key = 'angelau013012-wq-echoandexit/views'; // replace with your username-repo if different
+  const counterKey = 'angelau013012/echoandexit/views';
 
-  fetch(`https://countapi-js.onrender.com/update/${key}?amount=1`)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('count').textContent = data.value;
-    })
-    .catch(err => {
-      console.error('CountAPI error:', err);
-      document.getElementById('count').textContent = 'error';
-    });
+  // Check if the device has already incremented the counter
+  if (!localStorage.getItem('counted')) {
+    // Increment the counter by 1
+    fetch(`https://countapi-js.onrender.com/update/${counterKey}?amount=1`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('count').textContent = data.value;
+        localStorage.setItem('counted', 'true');
+      })
+      .catch(err => {
+        console.error('Error updating view count:', err);
+        document.getElementById('count').textContent = 'Error';
+      });
+  } else {
+    // Fetch the current view count
+    fetch(`https://countapi-js.onrender.com/get/${counterKey}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('count').textContent = data.value;
+      })
+      .catch(err => {
+        console.error('Error fetching view count:', err);
+        document.getElementById('count').textContent = 'Error';
+      });
+  }
   </script>
       <div class="ad">
       <strong>Sponsored:</strong> Mindless Scroll Inc. — “Because ignoring life is our business.”
